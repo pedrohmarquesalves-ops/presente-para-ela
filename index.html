@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffe4ec">
+  <title>Um presente para você ❤️</title>
+  <style>
+    :root {
+      --pink: #f7a9c4;
+      --pink-dark: #d94f83;
+      --rose: #fff0f5;
+      --cream: #fffafc;
+      --text: #633747;
+      --muted: #8b6472;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background: linear-gradient(180deg, #ffe8ef 0%, #fff7fa 48%, #ffeef4 100%);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+    .hearts {
+      position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0;
+    }
+    .heart {
+      position: absolute; bottom: -40px; color: #ee83a9; opacity: .3;
+      animation: float-up linear infinite;
+    }
+    @keyframes float-up {
+      from { transform: translateY(0) rotate(0deg); opacity: 0; }
+      15% { opacity: .35; }
+      to { transform: translateY(-115vh) rotate(25deg); opacity: 0; }
+    }
+    main { position: relative; z-index: 1; }
+    .hero {
+      min-height: 90vh; display: grid; place-items: center; text-align: center;
+      padding: 64px 20px 72px;
+    }
+    .hero-inner { max-width: 760px; }
+    .eyebrow {
+      display: inline-block; border: 1px solid #f3b6cb; border-radius: 999px;
+      padding: 6px 15px; color: var(--pink-dark); font: 600 .78rem Arial, sans-serif;
+      letter-spacing: .12em; text-transform: uppercase; background: #fff8fb;
+    }
+    h1 {
+      font-size: clamp(2.7rem, 8vw, 5.6rem); line-height: 1.05;
+      font-weight: normal; margin: 22px 0 18px; color: #b83c70;
+    }
+    h1 span { color: #e878a0; }
+    .hero p { max-width: 570px; margin: 0 auto 28px; font-size: clamp(1.05rem, 2.6vw, 1.25rem); }
+    .button {
+      display: inline-block; border: 0; border-radius: 999px; padding: 13px 23px;
+      background: var(--pink-dark); color: white; text-decoration: none;
+      font: 600 1rem Arial, sans-serif; cursor: pointer;
+      box-shadow: 0 8px 22px #d94f8333; transition: transform .2s, background .2s;
+    }
+    .button:hover { transform: translateY(-2px); background: #bd3e70; }
+    section { padding: 58px 20px; }
+    .section-inner { width: min(100%, 980px); margin: auto; }
+    .section-title { text-align: center; margin-bottom: 30px; }
+    .section-title h2 { color: #b83c70; font-weight: normal; font-size: clamp(2rem, 5vw, 3rem); margin: 0 0 8px; }
+    .section-title p { color: var(--muted); margin: 0; }
+    .gallery {
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px;
+    }
+    .photo-card {
+      background: white; border-radius: 18px; padding: 10px;
+      box-shadow: 0 10px 30px #8d365019; transform: rotate(var(--tilt, 0deg));
+    }
+    .photo-card img {
+      display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover;
+      border-radius: 12px; background: #ffe1eb;
+    }
+    .photo-card p { text-align: center; margin: 10px 4px 3px; color: #875064; font-size: .98rem; }
+    .placeholder {
+      display: grid; place-items: center; text-align: center; padding: 18px;
+      color: #b83c70; font: .95rem Arial, sans-serif;
+    }
+    .letter-wrap { max-width: 740px; margin: auto; }
+    .letter {
+      background: #fffdfd; border: 1px solid #f7d3df; border-radius: 22px;
+      padding: clamp(24px, 5vw, 46px); box-shadow: 0 14px 36px #8d365015;
+    }
+    .letter .salutation { font-size: 1.4rem; color: #b83c70; }
+    .letter p { margin: 0 0 16px; }
+    .signature { text-align: right; color: #b83c70; font-style: italic; font-size: 1.2rem; margin-top: 24px; }
+    .surprise { text-align: center; margin-top: 25px; }
+    #hidden-message {
+      display: none; margin: 22px auto 0; max-width: 600px; padding: 20px;
+      background: #ffe4ed; border-radius: 16px; font-size: 1.12rem;
+    }
+    #hidden-message.show { display: block; animation: appear .45s ease-out; }
+    @keyframes appear { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .final-note { text-align: center; padding-top: 34px; padding-bottom: 65px; }
+    .final-note p { font-size: 1.25rem; }
+    footer { position: relative; z-index: 1; text-align: center; padding: 20px; color: #986b7d; font: .85rem Arial, sans-serif; }
+    @media (max-width: 680px) {
+      .gallery { grid-template-columns: 1fr; max-width: 420px; margin: auto; gap: 22px; }
+      .photo-card { transform: none; }
+      .photo-card img { aspect-ratio: 5 / 4; }
+      .hero { min-height: 82vh; }
+    }
+  </style>
+</head>
+<body>
+  <div class="hearts" id="hearts" aria-hidden="true"></div>
+
+  <main>
+    <header class="hero">
+      <div class="hero-inner">
+        <span class="eyebrow">Feito com carinho, só para você</span>
+        <!-- PERSONALIZE: troque "Meu amor" pelo apelido dela -->
+        <h1>Para <span>meu amor</span> <span aria-hidden="true">♥</span></h1>
+        <p>Preparei esse cantinho para guardar um pouquinho do quanto você é especial para mim.</p>
+        <a class="button" href="#nossas-memorias">Abrir meu presente ♥</a>
+      </div>
+    </header>
+
+    <section id="nossas-memorias">
+      <div class="section-inner">
+        <div class="section-title">
+          <h2>Nossas memórias 📸</h2>
+          <p>Alguns momentos que deixam minha vida mais bonita.</p>
+        </div>
+        <div class="gallery">
+          <!-- Para colocar suas fotos: ponha os arquivos na mesma pasta do index.html
+               e troque "foto1.jpg", "foto2.jpg" e "foto3.jpg" pelos nomes corretos. -->
+          <article class="photo-card" style="--tilt:-1.5deg">
+            <img src="foto1.jpg" alt="Uma lembrança especial de vocês" onerror="this.outerHTML='<div class=&quot;placeholder&quot; style=&quot;aspect-ratio:4/5&quot;>📷<br>Coloque aqui a primeira foto de vocês<br><small>arquivo: foto1.jpg</small></div>'">
+            <p>Um momento para guardar ❤️</p>
+          </article>
+          <article class="photo-card" style="--tilt:1deg">
+            <img src="foto2.jpg" alt="Outra lembrança especial de vocês" onerror="this.outerHTML='<div class=&quot;placeholder&quot; style=&quot;aspect-ratio:4/5&quot;>🌷<br>Coloque aqui outra foto especial<br><small>arquivo: foto2.jpg</small></div>'">
+            <p>Com você, tudo fica melhor</p>
+          </article>
+          <article class="photo-card" style="--tilt:-.7deg">
+            <img src="foto3.jpg" alt="Mais uma lembrança de vocês" onerror="this.outerHTML='<div class=&quot;placeholder&quot; style=&quot;aspect-ratio:4/5&quot;>💗<br>Escolha mais uma foto favorita<br><small>arquivo: foto3.jpg</small></div>'">
+            <p>Minha pessoa favorita</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="letter-wrap">
+        <div class="section-title">
+          <h2>Uma cartinha para você 💌</h2>
+          <p>Porque algumas coisas merecem ser ditas com calma.</p>
+        </div>
+        <div class="letter">
+          <!-- PERSONALIZE esta carta para ficar com a sua cara. -->
+          <p class="salutation">Meu amor,</p>
+          <p>Talvez esse site seja uma forma diferente de te dizer algo que eu quero que você nunca esqueça: você é muito especial para mim.</p>
+          <p>Eu gosto dos nossos momentos, das nossas conversas, das risadas e até das pequenas coisas do dia a dia que ficam melhores quando tenho você por perto.</p>
+          <p>Não precisa existir uma data especial para eu celebrar a sorte que é ter você na minha vida. Eu só queria preparar uma surpresa e deixar registrado um pouquinho do carinho enorme que sinto por você.</p>
+          <p>Obrigado por ser você e por fazer parte da minha história. Espero continuar criando muitas lembranças bonitas ao teu lado.</p>
+          <p class="signature">Com todo meu amor, ❤️<br>Seu namorado</p>
+        </div>
+        <div class="surprise">
+          <button class="button" id="reveal-button" type="button" aria-expanded="false" aria-controls="hidden-message">Tem mais uma coisinha…</button>
+          <div id="hidden-message" aria-live="polite">
+            Se eu pudesse escolher de novo, ainda escolheria você. Hoje, amanhã e em todos os pequenos momentos que fazem a vida valer a pena. Te amo! 💗
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-note">
+      <div class="section-inner">
+        <p>Um site simples, mas feito pensando em você. 🌷</p>
+        <div style="font-size:2rem;color:#d94f83" aria-hidden="true">♥ ♥ ♥</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>Feito com amor, especialmente para você. ❤️</footer>
+
+  <script>
+    const heartsContainer = document.getElementById('hearts');
+    const heartSymbols = ['♥', '♡', '❤'];
+    for (let i = 0; i < 18; i++) {
+      const heart = document.createElement('span');
+      heart.className = 'heart';
+      heart.textContent = heartSymbols[i % heartSymbols.length];
+      heart.style.left = `${Math.random() * 100}%`;
+      heart.style.fontSize = `${14 + Math.random() * 22}px`;
+      heart.style.animationDuration = `${9 + Math.random() * 12}s`;
+      heart.style.animationDelay = `${Math.random() * -18}s`;
+      heartsContainer.appendChild(heart);
+    }
+
+    const revealButton = document.getElementById('reveal-button');
+    const hiddenMessage = document.getElementById('hidden-message');
+    revealButton.addEventListener('click', () => {
+      const isVisible = hiddenMessage.classList.toggle('show');
+      revealButton.setAttribute('aria-expanded', String(isVisible));
+      revealButton.textContent = isVisible ? 'Esconder mensagem' : 'Tem mais uma coisinha…';
+    });
+  </script>
+</body>
+</html>
